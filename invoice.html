@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice Template</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+    }
+    .invoice-container {
+        max-width: 550px;
+        margin: auto;
+        background: #fff;
+        padding: 130px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .header h1 {
+        font-size: 2em;
+        font-weight: bold;
+    }
+    .header img {
+        height: 40px;
+    }
+    .billed-to, .payment-info {
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+    .billed-to {
+        font-weight: bold;
+    }
+    .invoice-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    table, th, td {
+        border-bottom: 1px solid #ddd;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+    th {
+        font-weight: bold;
+    }
+    .total-section {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    .thank-you {
+        font-size: 1.1em;
+        margin-top: 30px;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+
+<div class="invoice-container">
+    <div class="header">
+        <img src="https://via.placeholder.com/40" alt="Logo">
+        <h1>INVOICE</h1>
+    </div>
+
+    <div class="invoice-details">
+        <div class="billed-to">
+            <p>BILLED TO:</p>
+            <p>Imani Olowe<br>+123-456-7890<br>63 Ivy Road, Hawkville, GA, USA 31036</p>
+        </div>
+        <div>
+            <p>Invoice No. 12345<br>16 June 2025</p>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="item-table">
+            <tr>
+                <td>Eggshell Camisole Top</td>
+                <td>1</td>
+                <td>$123</td>
+                <td class="total-cell">$123</td>
+            </tr>
+            <tr>
+                <td>Cuban Collar Shirt</td>
+                <td>2</td>
+                <td>$127</td>
+                <td class="total-cell">$254</td>
+            </tr>
+            <tr>
+                <td>Floral Cotton Dress</td>
+                <td>1</td>
+                <td>$123</td>
+                <td class="total-cell">$123</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="total-section">
+        <span>Subtotal</span>
+        <span id="subtotal">$500</span>
+    </div>
+    <div class="total-section">
+        <span>Tax (0%)</span>
+        <span>$0</span>
+    </div>
+    <div class="total-section" style="font-size: 1.3em;">
+        <span>Total</span>
+        <span id="total">$500</span>
+    </div>
+
+    <div class="thank-you">Thank ydsfdsou!</div>
+    <div class="payment-info">
+        <p>PAYMENT INFORMATION</p>
+        <p>Briard Bank<br>Account Name: Samira Hadid<br>Account No.: 123-456-7890<br>Pay by: 5 July 2025</p>
+        <p>123 Anywhere St., Any City, ST 12345</p>
+    </div>
+</div>
+<button onclick="downloadPDF()">Download as PDF</button>
+<script>
+  function downloadPDF() {
+    html2canvas(document.body).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 0, 0);
+      pdf.save('download.pdf');
+    });
+  }
+    // JavaScript to calculate totals if needed in the future
+    function calculateTotal() {
+        let rows = document.querySelectorAll('#item-table tr');
+        let subtotal = 0;
+        rows.forEach(row => {
+            let quantity = parseInt(row.cells[1].textContent);
+            let unitPrice = parseFloat(row.cells[2].textContent.replace('$', ''));
+            let total = quantity * unitPrice;
+            row.cells[3].textContent = `$${total.toFixed(2)}`;
+            subtotal += total;
+        });
+        document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('total').textContent = `$${subtotal.toFixed(2)}`;
+    }
+    calculateTotal();
+</script>
+<button onclick="downloadPDF()">Download as PDF</button>
+</body>
+</html>
